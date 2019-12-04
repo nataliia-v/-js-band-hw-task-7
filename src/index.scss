@@ -1,0 +1,10 @@
+@import "~bootstrap/scss/bootstrap.scss";
+@import './styles/variables.scss';
+
+* {
+  box-sizing: border-box;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
