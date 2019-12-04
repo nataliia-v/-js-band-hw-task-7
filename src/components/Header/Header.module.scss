@@ -1,0 +1,14 @@
+@import '../../styles/variables.scss';
+
+.header {
+    padding: 20px 0 20px 20px;
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 3px solid black;
+    height: $headerHeight;
+}
+
+.headerName {
+    font-weight: bold;
+    font-size: 30px;
+}

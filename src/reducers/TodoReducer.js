@@ -1,25 +1,34 @@
-import { ADD_TODO, REMOVE_TODO, TOGGLE_TODO } from '../constants/actionTypes';
+import {
+  ADD_TODO,
+  REMOVE_TODO,
+  EDIT_TODO,
+  TOGGLE_TODO
+} from '../constants/actionTypes';
 
-const TODO_DATA = [];
+const initialState = [];
 
-const todoReducer = (state = TODO_DATA, action) => {
+const todoReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO:
-      return [
-        ...state,
-        {
-          id: action.id,
-          text: action.text,
-          done: false
-        }
-      ];
+      return [...state, action.payload];
     case TOGGLE_TODO:
       return state.map(todo =>
         todo.id === action.id ? { ...todo, done: !todo.done } : todo
       );
     case REMOVE_TODO:
-      const todoIndex = parseInt(action.id);
-      return state.filter(todo => todo.id !== todoIndex);
+      return state.filter(todo => todo.id !== action.id);
+    case EDIT_TODO:
+      return [
+        ...state,
+        state.map(todo =>
+          todo.id === action.payload.id
+            ? {
+                ...todo,
+                ...action.payload
+              }
+            : todo
+        )
+      ];
     default:
       return state;
   }
