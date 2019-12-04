@@ -13,12 +13,12 @@ export const addTodo = text => ({
 
 export const deleteTodo = id => ({
   type: REMOVE_TODO,
-  id: id
+  id
 });
 
 export const toggleTodo = id => ({
   type: TOGGLE_TODO,
-  id: id
+  id
 });
 
 export const setVisibilityFilter = filter => ({
