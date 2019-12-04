@@ -1,0 +1,10 @@
+
+.app {
+  text-align: center;
+}
+
+.mainContent {
+  padding: 20px;
+  height: calc(100vh - #{$headerHeight} - #{$footerHeight});
+  overflow-y: scroll;
+}
