@@ -1,41 +1,21 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-import TodoForm from '../TodoForm/TodoForm';
-import ModalContext from '../../contexts/ModalContext';
-import Input from '../Forms/Input/Input';
-import Select from '../Forms/Select/Select';
-import {
-  allOption,
-  filterPriorityOptions,
-  filterStatusOptions
-} from '../../utils/constants';
+import TodoForm from 'components/TodoForm/TodoForm';
+import ModalContext from 'contexts/ModalContext';
+import Input from 'components/Forms/Input/Input';
+import Select from 'components/Forms/Select/Select';
+import { filterPriorityOptions, filterStatusOptions } from 'utils/constants';
+import { getFilters } from 'state/filters/selectors';
+import { setFilter } from 'state/filters/actions';
 
 import styles from './Filters.module.scss';
 
 class Filters extends Component {
   static contextType = ModalContext;
 
-  static defaultProps = {
-    filtersInitialValues: {
-      search: '',
-      status: allOption.value,
-      priority: allOption.value
-    }
-  };
-
-  state = (() => {
-    const { filtersInitialValues } = this.props;
-
-    return {
-      filters: {
-        search: filtersInitialValues.search,
-        status: filtersInitialValues.status,
-        priority: filtersInitialValues.priority
-      }
-    };
-  })();
-
-  openModal = () => {
+  openTodoFormModal = () => {
     const { openModal, closeModal } = this.context;
     openModal({
       component: TodoForm,
@@ -48,7 +28,6 @@ class Filters extends Component {
 
   handleTodoFormSubmit = values => {
     const { onAddTodoItem } = this.props;
-    console.log(this.props);
     const { closeModal } = this.context;
 
     onAddTodoItem(values);
@@ -57,21 +36,14 @@ class Filters extends Component {
   };
 
   handleChange = event => {
-    const { onFiltersChange } = this.props;
-
+    const { actions } = this.props;
     const { name, value } = event.currentTarget;
 
-    this.setState(
-      ({ filters }) => ({ filters: { ...filters, [name]: value } }),
-      () => {
-        const { filters } = this.state;
-        onFiltersChange(filters);
-      }
-    );
+    actions.setFilter({ name, value });
   };
 
   render() {
-    const { filters } = this.state;
+    const { filters } = this.props;
 
     return (
       <div className={styles.wrapper}>
@@ -96,7 +68,7 @@ class Filters extends Component {
         <button
           className="btn btn-primary"
           type="button"
-          onClick={this.openModal}
+          onClick={this.openTodoFormModal}
         >
           Create
         </button>
@@ -105,4 +77,12 @@ class Filters extends Component {
   }
 }
 
-export default Filters;
+const mapStateToProps = state => ({
+  filters: getFilters(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({ setFilter }, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filters);

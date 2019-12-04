@@ -22,7 +22,8 @@
     "react/sort-comp": 0,
     "no-case-declarations": 0,
     "semi": "error",
-    "radix": ["error", "as-needed"]
+    "radix": ["error", "as-needed"],
+    "react/destructuring-assignment": 0
   },
   "globals": {
     "window": true,
@@ -36,5 +37,12 @@
     "Request": true,
     "fetch": true
   },
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  }
 }

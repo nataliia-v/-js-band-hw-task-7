@@ -1,111 +1,43 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import Filters from '../Filters/Filters';
-import TodoList from '../TodoList/TodoList';
-
-import ModalContext from '../../contexts/ModalContext';
-import TodoForm from '../TodoForm/TodoForm';
-import { allOption } from '../../utils/constants';
-
-import { deleteTodo, toggleTodo } from '../../actions/actionCreators';
+import Filters from 'components/Filters/Filters';
+import TodoList from 'components/TodoList/TodoList';
+import TodoForm from 'components/TodoForm/TodoForm';
+import ModalContext from 'contexts/ModalContext';
+import { addTodo, deleteTodo, editTodo } from 'state/todos/actions';
+import { getFilteredTodos } from 'state/todos/selectors';
 
 class Todos extends Component {
   static contextType = ModalContext;
 
-  state = {
-    allTodoItems: [],
-    // filteredTodoItems: [],
-    filters: {
-      search: '',
-      status: allOption.value,
-      priority: allOption.value
-    }
-  };
-
-  componentDidMount() {
-    this.recalculate();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { allTodoItems, filters } = this.state;
-
-    if (
-      prevState.allTodoItems !== allTodoItems ||
-      prevState.filters !== filters
-    ) {
-      this.recalculate();
-    }
-  }
-
-  recalculate = () => {
-    // const { filters } = this.state;
-    //
-    // const filtersToApply = Object.keys(filters).filter(
-    //   filterKey => filters[filterKey]
-    // );
-    //
-    // this.setState(({ allTodoItems }) => ({
-    //   filteredTodoItems: allTodoItems.filter(todoItem => {
-    //     return filtersToApply.every(filterName => {
-    //       switch (filterName) {
-    //         case 'search':
-    //           return new RegExp(filters.search, 'i').test(todoItem.title);
-    //         case 'status': {
-    //           if (filters.status === allOption.value) return true;
-    //           if (filters.status === 'open') return !todoItem.done;
-    //           if (filters.status === 'done') return todoItem.done;
-    //           break;
-    //         }
-    //         case 'priority':
-    //           if (filters.priority === allOption.value) return true;
-    //
-    //           return todoItem.priority === filters.priority;
-    //         default:
-    //           return true;
-    //       }
-    //       return null;
-    //     });
-    //   })
-    // }));
-  };
-
-  onFiltersChange = filters => {
-    this.setState({
-      filters
-    });
-  };
-
   onAddTodoItem = todoItem => {
-    const { closeModal } = this.context;
-    this.setState(({ allTodoItems }) => ({
-      allTodoItems: [...allTodoItems, todoItem]
-    }));
-    closeModal();
+    const { actions } = this.props;
+
+    actions.addTodo(todoItem);
   };
 
   onDone = todoId => {
-    const { dispatch } = this.props;
-    console.log('dispatched onDone: ', dispatch(toggleTodo(todoId)));
+    const { actions } = this.props;
+
+    actions.editTodo({ id: todoId, done: true });
   };
 
   handleEdit = values => {
     const { closeModal } = this.context;
-    this.setState(({ allTodoItems }) => ({
-      allTodoItems: allTodoItems.map(todoItem => {
-        if (todoItem.id === values.id) return values;
-        return todoItem;
-      })
-    }));
+    const { actions } = this.props;
+
+    actions.editTodo(values);
 
     closeModal();
   };
 
   onEdit = todoId => {
-    const { allTodoItems } = this.state;
     const { openModal, closeModal } = this.context;
+    const { todos } = this.props;
 
-    const todoItem = allTodoItems.find(item => item.id === todoId);
+    const todoItem = todos.find(item => item.id === todoId);
 
     openModal({
       component: TodoForm,
@@ -115,25 +47,19 @@ class Todos extends Component {
         onClose: closeModal
       }
     });
-    // const {dispatch} = this.props;
-    // dispatch(editTodo(todoId));
   };
 
   onDelete = todoId => {
-    const { dispatch } = this.props;
-    dispatch(deleteTodo(todoId));
+    const { actions } = this.props;
+
+    actions.deleteTodo(todoId);
   };
 
   render() {
-    const { filters } = this.state;
     const { todos } = this.props;
     return (
       <div>
-        <Filters
-          filtersInitialValues={filters}
-          onAddTodoItem={this.onAddTodoItem}
-          onFiltersChange={this.onFiltersChange}
-        />
+        <Filters onAddTodoItem={this.onAddTodoItem} />
         <TodoList
           todoItems={todos}
           onDone={this.onDone}
@@ -146,7 +72,18 @@ class Todos extends Component {
 }
 
 const mapStateToProps = state => ({
-  todos: state.todos
+  todos: getFilteredTodos(state)
 });
 
-export default connect(mapStateToProps)(Todos);
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(
+    {
+      addTodo,
+      deleteTodo,
+      editTodo
+    },
+    dispatch
+  )
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Todos);

@@ -1,14 +1,12 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
-import FormField from '../Forms/FormField/FormField';
-import Input from '../Forms/Input/Input';
-import { priorityOptions } from '../../utils/constants';
+import FormField from 'components/Forms/FormField/FormField';
+import Input from 'components/Forms/Input/Input';
+import Textarea from 'components/Forms/Textarea/Textarea';
+import Select from 'components/Forms/Select/Select';
+import { priorityOptions } from 'utils/constants';
 
 import styles from './TodoForm.module.scss';
-import Textarea from '../Forms/Textarea/Textarea';
-import Select from '../Forms/Select/Select';
-import { addTodo } from '../../actions/actionCreators';
 
 class TodoForm extends React.Component {
   static defaultProps = {
@@ -21,18 +19,15 @@ class TodoForm extends React.Component {
     }
   };
 
-  state = (() => {
-    const { initialValues } = this.props;
-    return {
-      formValues: {
-        id: initialValues.id || Date.now(),
-        done: initialValues.done,
-        title: initialValues.title,
-        description: initialValues.description,
-        priority: initialValues.priority
-      }
-    };
-  })();
+  state = {
+    formValues: {
+      id: this.props.initialValues.id || Date.now(),
+      done: this.props.initialValues.done,
+      title: this.props.initialValues.title,
+      description: this.props.initialValues.description,
+      priority: this.props.initialValues.priority
+    }
+  };
 
   handleChange = event => {
     const { name, value } = event.currentTarget;
@@ -43,10 +38,12 @@ class TodoForm extends React.Component {
   };
 
   handleSubmit = event => {
-    const { dispatch } = this.props;
-    const { formValues } = this.state;
     event.preventDefault();
-    dispatch(addTodo(formValues));
+
+    const { formValues } = this.state;
+    const { onSubmit } = this.props;
+
+    onSubmit(formValues);
   };
 
   render() {
@@ -109,4 +106,4 @@ class TodoForm extends React.Component {
   }
 }
 
-export default connect()(TodoForm);
+export default TodoForm;
