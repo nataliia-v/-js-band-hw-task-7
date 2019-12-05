@@ -1,9 +1,9 @@
 import React from 'react';
 
-import FormField from 'components/Forms/FormField/FormField';
-import Input from 'components/Forms/Input/Input';
-import Textarea from 'components/Forms/Textarea/Textarea';
-import Select from 'components/Forms/Select/Select';
+import FormField from 'pages/Todos/components/Forms/FormField/FormField';
+import Input from 'pages/Todos/components/Forms/Input/Input';
+import Textarea from 'pages/Todos/components/Forms/Textarea/Textarea';
+import Select from 'pages/Todos/components/Forms/Select/Select';
 import { priorityOptions } from 'utils/constants';
 
 import styles from './TodoForm.module.scss';

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 
+import Todos from 'pages/Todos/Todos';
 import ModalContext from '../../contexts/ModalContext';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import Todos from '../Todos/Todos';
 import ModalRoot from '../ModalRoot/ModalRoot';
 
 import styles from './App.module.scss';

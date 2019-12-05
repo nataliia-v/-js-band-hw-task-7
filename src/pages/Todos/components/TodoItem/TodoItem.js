@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import DropdownAnchor from './DropdownAnchor';
 import ButtonDropdown from '../ButtonDropdown/ButtonDropdown';
-import { priorityOptions } from '../../utils/constants';
+import { priorityOptions } from '../../../../utils/constants';
 
 import styles from './TodoItem.module.scss';
 

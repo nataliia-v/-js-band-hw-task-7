@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Filters from 'components/Filters/Filters';
+import Filters from 'pages/Todos/components/Filters/Filters';
 import TodoForm from 'components/TodoForm/TodoForm';
 import ModalContext from 'contexts/ModalContext';
 import { addTodo, deleteTodo, editTodo } from 'state/todos/actions';
 import { getFilteredTodos } from 'state/todos/selectors';
+import TodoItem from 'pages/Todos/components/TodoItem/TodoItem';
+
 import styles from './Todos.module.scss';
-import TodoItem from '../TodoItem/TodoItem';
 
 class Todos extends Component {
   static contextType = ModalContext;
