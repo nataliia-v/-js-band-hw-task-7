@@ -21,8 +21,6 @@ const getTodoItemDropdownOptions = ({
 class TodoItem extends Component {
   handleDone = () => {
     const { id, onDone } = this.props;
-    console.log(this.props);
-
     onDone(id);
   };
 
