@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Gh-pages link:
 
-https://nataliia-v.github.io/js-band-hw-task-6/#/todos
+https://nataliia-v.github.io/js-band-hw-task-7/#/todos
 
 ## Available Scripts
 
