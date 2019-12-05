@@ -13,9 +13,10 @@ import styles from './App.module.scss';
 const internName = 'Nataliia Verbenska';
 
 class App extends Component {
-  state = {
-    activeModal: null
-  };
+  constructor(props) {
+    super(props);
+    this.state = { activeModal: null };
+  }
 
   openModal = modalConfig => {
     this.setState({

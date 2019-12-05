@@ -19,15 +19,18 @@ class TodoForm extends React.Component {
     }
   };
 
-  state = {
-    formValues: {
-      id: this.props.initialValues.id || Date.now(),
-      done: this.props.initialValues.done,
-      title: this.props.initialValues.title,
-      description: this.props.initialValues.description,
-      priority: this.props.initialValues.priority
-    }
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      formValues: {
+        id: this.props.initialValues.id || Date.now(),
+        done: this.props.initialValues.done,
+        title: this.props.initialValues.title,
+        description: this.props.initialValues.description,
+        priority: this.props.initialValues.priority
+      }
+    };
+  }
 
   handleChange = event => {
     const { name, value } = event.currentTarget;
