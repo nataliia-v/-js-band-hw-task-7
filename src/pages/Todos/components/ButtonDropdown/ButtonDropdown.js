@@ -3,9 +3,12 @@ import React, { Component } from 'react';
 import styles from './ButtonDropdown.module.scss';
 
 class ButtonDropdown extends Component {
-  state = {
-    open: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    };
+  }
 
   toggleDropdown = () => {
     this.setState(({ open }) => ({

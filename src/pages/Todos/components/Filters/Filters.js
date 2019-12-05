@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import TodoForm from 'components/TodoForm/TodoForm';
 import ModalContext from 'contexts/ModalContext';
-import Input from 'components/Forms/Input/Input';
-import Select from 'components/Forms/Select/Select';
+import Input from 'pages/Todos/components/Forms/Input/Input';
+import Select from 'pages/Todos/components/Forms/Select/Select';
 import { filterPriorityOptions, filterStatusOptions } from 'utils/constants';
 import { getFilters } from 'state/filters/selectors';
 import { setFilter } from 'state/filters/actions';

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import FormField from 'components/Forms/FormField/FormField';
-import Input from 'components/Forms/Input/Input';
-import Textarea from 'components/Forms/Textarea/Textarea';
-import Select from 'components/Forms/Select/Select';
+import FormField from 'pages/Todos/components/Forms/FormField/FormField';
+import Input from 'pages/Todos/components/Forms/Input/Input';
+import Textarea from 'pages/Todos/components/Forms/Textarea/Textarea';
+import Select from 'pages/Todos/components/Forms/Select/Select';
 import { priorityOptions } from 'utils/constants';
 
 import styles from './TodoForm.module.scss';
@@ -19,15 +19,18 @@ class TodoForm extends React.Component {
     }
   };
 
-  state = {
-    formValues: {
-      id: this.props.initialValues.id || Date.now(),
-      done: this.props.initialValues.done,
-      title: this.props.initialValues.title,
-      description: this.props.initialValues.description,
-      priority: this.props.initialValues.priority
-    }
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      formValues: {
+        id: this.props.initialValues.id || Date.now(),
+        done: this.props.initialValues.done,
+        title: this.props.initialValues.title,
+        description: this.props.initialValues.description,
+        priority: this.props.initialValues.priority
+      }
+    };
+  }
 
   handleChange = event => {
     const { name, value } = event.currentTarget;
