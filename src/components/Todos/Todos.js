@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Filters from 'components/Filters/Filters';
-import TodoList from 'components/TodoList/TodoList';
 import TodoForm from 'components/TodoForm/TodoForm';
 import ModalContext from 'contexts/ModalContext';
 import { addTodo, deleteTodo, editTodo } from 'state/todos/actions';
 import { getFilteredTodos } from 'state/todos/selectors';
+import styles from './Todos.module.scss';
+import TodoItem from '../TodoItem/TodoItem';
 
 class Todos extends Component {
   static contextType = ModalContext;
@@ -60,12 +61,17 @@ class Todos extends Component {
     return (
       <div>
         <Filters onAddTodoItem={this.onAddTodoItem} />
-        <TodoList
-          todoItems={todos}
-          onDone={this.onDone}
-          onEdit={this.onEdit}
-          onDelete={this.onDelete}
-        />
+        <div className={styles.wrapper}>
+          {todos.map(todoItem => (
+            <TodoItem
+              key={todoItem.id}
+              onDone={this.onDone}
+              onEdit={this.onEdit}
+              onDelete={this.onDelete}
+              {...todoItem}
+            />
+          ))}
+        </div>
       </div>
     );
   }
